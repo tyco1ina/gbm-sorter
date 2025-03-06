@@ -1,0 +1,147 @@
+@import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;700&display=swap');
+
+body {
+  margin: 0;
+  font-family: 'Comfortaa', sans-serif;
+  background: linear-gradient(to bottom, #3f3d52ff, #435f7bff);
+  color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+h1 {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.question {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.question p {
+  text-align: center;
+  max-width: 300px; /* Limit the width to match the answer options */
+}
+
+.input-box {
+  background-color: white;
+  color: black;
+  text-align: center;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  padding: 10px;
+  font-size: 12px;
+  margin-top: 10px;
+  width: 200px; /* Increased width */
+  height: 15px; /* Keeping the height same */
+}
+
+.option {
+  display: flex;
+  align-items: center;
+  justify-content: center; /* Added to center the answers */
+  margin-bottom: 10px;
+  width: 300px;
+}
+
+.option input[type="radio"] {
+  display: none;
+}
+
+.option label {
+  background-color: white;
+  color: black;
+  width: 200px;
+  height: 15px;
+  text-align: center;
+  font-size: 12px;
+  border: 2px solid #ccc;
+  border-radius: 5px;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: background-color 0.3s, border-color 0.3s;
+}
+
+.option input[type="radio"]:checked + label {
+  background-color: #1bb9b1;
+  border-color: #1bb9b1;
+  color: white;
+}
+
+.button-container {
+  display: flex;
+  flex-direction: column; /* Added to display buttons in a column */
+  justify-content: center;
+  align-items: center; /* Added to center the button */
+  width: 100%;
+  padding-bottom: 20px; /* Added padding under the button */
+}
+
+button {
+  background-color: white;
+  color: black;
+  font-size: 12px; /* Same text size as the answer choices */
+  border: 2px solid #ccc;
+  border-radius: 5px;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: background-color 0.3s, border-color 0.3s;
+  margin-top: 20px;
+  text-align: center;
+}
+
+button:hover {
+  background-color: #f0f0f0;
+}
+
+button:active {
+  background-color: #e0e0e0;
+}
+
+button:focus {
+  outline: none;
+  border-color: #1bb9b1;
+}
+
+.admin-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.admin-table {
+  border-collapse: collapse;
+  margin-bottom: 20px;
+  width: 100%; /* Make the table take the full width */
+}
+
+.admin-table th, .admin-table td {
+  border: 1px solid #ccc;
+  padding: 10px;
+  text-align: center;
+  width: 20%; /* Ensure each column takes up an equal width */
+}
+
+.admin-table th {
+  font-weight: bold; /* Bold the column headers */
+}
+
+.admin-container button:last-of-type {
+  margin-top: 20px; /* Add padding between the table and the "Back to Quiz" button */
+}
+
+.admin-container table {
+  margin-top: 20px; /* Add spacing between the "Back to Quiz" button and the table */
+}
+
+.thank-you-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh; /* Full height of the viewport */
+}
