@@ -153,6 +153,24 @@ export const handleData = async (data) => {
     let result = getAlignmentRanking(data);
     let email = gtEmail;
 
+    // Get the attendee information from the table
+    const response = await fetch('https://l11sh25g55.execute-api.us-east-1.amazonaws.com/get-attendee-info', {
+      method: 'GET',
+    });
+
+    if (response.ok) {
+      const data = await response.json();
+      
+      for (let i = 0; i < data.length; i++) {
+        if (data[i]['email'] === email) {
+            return 'You have already submitted your information.';
+        }
+      }
+
+    } else {
+        console.error('Error fetching attendee information:', response.statusText);
+    }
+
     try {
         const response = await fetch('https://l11sh25g55.execute-api.us-east-1.amazonaws.com/submit-form', {
           method: 'POST',
