@@ -21,11 +21,11 @@ export const getGroupings = async () => {
       const data = await response.json();
       
       // Set the maximum group size
-      const maxGroupSize = Math.ceil(data.length / 5);
+      // HAVE TO PROVE THIS MATHEMATICAL FORMULA WORKS!!!!!!!
+      const maxGroupSize = Math.floor(data.length / 5);
 
       for (let i = 0; i < data.length; i++) {
         const fullName = data[i]['firstName'] + ' ' + data[i]['lastName'];
-        const ranking = data[i]['ranking'];
         for (let j = 0; j < 5; j++) {
           const figure = data[i]['ranking'][j];
           if (groupings[figure].length < maxGroupSize) {
@@ -36,6 +36,11 @@ export const getGroupings = async () => {
       }
 
       console.log(groupings)
+      for (let figure in groupings) {
+        if (groupings[figure].length < maxGroupSize) {
+          console.log(groupings[figure].length)
+        }
+      }
       return groupings; // Assuming the response contains the list of attendees
   } else {
       console.error('Error fetching attendee information:', response.statusText);
@@ -186,8 +191,6 @@ export const handleData = async (data) => {
             result
           })
         });
-
-        console.log(response)
     
         if (response.ok) {
           return 'Information submitted successfully!'
