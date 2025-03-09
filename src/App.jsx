@@ -130,8 +130,15 @@ function App() {
           </tbody>
         </table>
         <h3>Attendees ({attendees.length})</h3>
+        <h3>
+            Duwende: {(attendees.filter(att => att['ranking'][0] === 'duwende').length)} ---
+            Aswang: {(attendees.filter(att => att['ranking'][0] === 'aswang').length)} ---
+            Maria Makiling: {(attendees.filter(att => att['ranking'][0] === 'mariaMakiling').length)} ---
+            Idiyanale: {(attendees.filter(att => att['ranking'][0] === 'idiyanale').length)} ---
+            Mapulon: {(attendees.filter(att => att['ranking'][0] === 'mapulon').length)} 
+        </h3>
         {attendees.map((attendee, index) => (
-          <p>{attendee['firstName']} {attendee['lastName']}</p>
+          <p>{attendee['firstName']} {attendee['lastName']}, {attendee['email']}, {attendee['year']}, {attendee['ranking'][0]}</p>
         ))}
       </div>
     );
@@ -294,7 +301,7 @@ function App() {
       </div>
       <div className="question">
         <img src={trolleyImage} alt="Trolley on fire" style={{ maxWidth: '300px' }} />
-        <p>A trolley on fire is heading towards a forest the size of Manhattan which is 700 miles from a large city. You can pull the lever to divert it to a different track, but it will run over and burn thirty million dollars that would have been yours. If you don’t pull the lever, the trolley will crash into the forest and burn it to the ground. There are no people in this forest, and you would not be blamed for the forest burning down. What do you do?</p>
+        <p>A trolley on fire is heading towards a forest the size of Manhattan which is 700 miles from a large city. You can pull the lever to divert it to a different track, but it will run over and burn five million dollars that would have been yours. If you don’t pull the lever, the trolley will crash into the forest and burn it to the ground. There are no people in this forest, and you would not be blamed for the forest burning down. What do you do?</p>
         <div className="option">
           <input type="radio" id="pullLever" name="trolley" value="Pull the lever" />
           <label htmlFor="pullLever">Pull the lever</label>
