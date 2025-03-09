@@ -1,9 +1,34 @@
 /**
  * @description
+ * Gets the list of people that have completed the form
+ * @returns {Array} - The list of people that have completed the form
+ */
+export const getAttendeeInfo = async () => {
+    // Get the attendee information from the table  
+    const response = await fetch('https://l11sh25g55.execute-api.us-east-1.amazonaws.com/get-attendee-info', {
+      method: 'GET',
+    });
+    if (response.ok) {
+      const data = await response.json();
+      return data; // Assuming the response contains the list of attendees
+    } else {
+      console.error('Error fetching attendee information:', response.statusText);
+      return null;
+    }
+}
+
+/**
+ * @description
  * This function determines the groupings for the GBM
  * @returns {Object} - The groupings for the GBM
  */
 export const getGroupings = async () => {
+
+    const attendees = await getAttendeeInfo();
+    if (attendees === null) {
+      return null;
+    }
+
     let groupings = {
       'duwende': [],
       'aswang': [],
@@ -12,42 +37,57 @@ export const getGroupings = async () => {
       'mapulon': []
     }
 
-    // Get the attendee information from the table
-    const response = await fetch('https://l11sh25g55.execute-api.us-east-1.amazonaws.com/get-attendee-info', {
-      method: 'GET',
-    });
+    const minGroupSize = Math.floor(attendees.length / 5);
 
-    if (response.ok) {
-      const data = await response.json();
-      
-      // Set the maximum group size
-      // HAVE TO PROVE THIS MATHEMATICAL FORMULA WORKS!!!!!!!
-      const maxGroupSize = Math.floor(data.length / 5);
-
-      for (let i = 0; i < data.length; i++) {
-        const fullName = data[i]['firstName'] + ' ' + data[i]['lastName'];
-        for (let j = 0; j < 5; j++) {
-          const figure = data[i]['ranking'][j];
-          if (groupings[figure].length < maxGroupSize) {
-            groupings[figure].push(fullName);
-            break;
-          }
+    for (let i = 0; i < attendees.length; i++) {
+      let assigned = false;
+      const fullName = attendees[i]['firstName'] + ' ' + attendees[i]['lastName'];
+      for (let j = 0; j < 5; j++) {
+        const figure = attendees[i]['ranking'][j];
+        if (groupings[figure].length < minGroupSize && !assigned) {
+          groupings[figure].push(fullName);
+          assigned = true;
         }
       }
 
-      console.log(groupings)
-      for (let figure in groupings) {
-        if (groupings[figure].length < maxGroupSize) {
-          console.log(groupings[figure].length)
-        }
+      if (!assigned) {
+        const groupKeys = Object.keys(groupings);
+        const figure = groupKeys[i % 5];
+        groupings[figure].push(fullName);
       }
-      return groupings; // Assuming the response contains the list of attendees
-  } else {
-      console.error('Error fetching attendee information:', response.statusText);
-      return null;
-  }
+    }
+
+    return groupings; // Assuming the response contains the list of attendees
 }
-    
+
+/**
+ * @description 
+ * This function determines random groupings for the GBM
+ * @param {Array} attendees - The list of attendees
+ * @returns {Object} - The groupings for the GBM
+ */
+export const getRandomGroupings = async () => {
+  const attendees = await getAttendeeInfo();
+    if (attendees === null) {
+      return null;
+    }
+
+    let groupings = {
+      'duwende': [],
+      'aswang': [],
+      'mariaMakiling': [],
+      'idiyanale': [],
+      'mapulon': []
+    }
+
+    for (let i = 0; i < attendees.length; i++) {
+      const fullName = attendees[i]['firstName'] + ' ' + attendees[i]['lastName'];
+      const figure = Object.keys(groupings)[i % 5];
+      groupings[figure].push(fullName);
+    }
+
+    return groupings; // Assuming the response contains the list of attendees
+}
 
 /**
  * @description

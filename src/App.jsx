@@ -5,12 +5,13 @@ import './App.css'
 import 'firebase/firestore';
 import 'firebase/auth';
 
-import { handleData, getGroupings } from './utils.js'
+import { handleData, getGroupings, getAttendeeInfo, getRandomGroupings } from './utils.js'
 
 function App() {
   const [isAdmin, setIsAdmin] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [attendees, setAttendees] = useState([]);
   const [groupings, setGroupings] = useState({
     'duwende': [],
     'aswang': [],
@@ -25,6 +26,15 @@ function App() {
       setGroupings(response);
     } else {
       alert('Error fetching groupings');
+    }
+  }
+
+  const handleRandomSortGroups = async () => {
+    const response = await getRandomGroupings();
+    if (response) {
+      setGroupings(response);
+    } else {
+      alert('Error fetching random groupings');
     }
   }
 
@@ -78,14 +88,24 @@ function App() {
     setIsAdmin(false);
   };
 
+  const handleFetchAttendees = async () => {
+    const response = await getAttendeeInfo();
+    if (response) {
+      setAttendees(response);
+    } else {
+      alert('Error fetching attendee information');
+    }
+  };
+
   if (isAdmin) {
     const groups = Object.values(groupings);
 
     return (
       <div className="admin-container">
         <button onClick={() => handleSortGroups()}>Sort Groups</button>
-        <button onClick={() => alert('Randomly Sort Groups')}>Randomly Sort Groups</button>
+        <button onClick={() => handleRandomSortGroups()}>Randomly Sort Groups</button>
         <button onClick={() => alert('Clear Table')}>Clear Table</button>
+        <button onClick={() => handleFetchAttendees()}>Refresh Attendees</button>
         <button onClick={handleBackToQuiz}>Back to Quiz</button>
         <table className="admin-table">
           <thead>
@@ -109,6 +129,10 @@ function App() {
             </tr>
           </tbody>
         </table>
+        <h3>Attendees ({attendees.length})</h3>
+        {attendees.map((attendee, index) => (
+          <p>{attendee['firstName']} {attendee['lastName']}</p>
+        ))}
       </div>
     );
   }
