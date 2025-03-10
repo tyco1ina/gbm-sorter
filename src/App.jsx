@@ -76,8 +76,8 @@ function App() {
   };
 
   const handleAdminSettings = () => {
-    const password = prompt('Enter admin password:');
-    if (password === 'halohalo') {
+    const password = prompt('Enter admin password (hint - its a prime number):');
+    if (password === "halohalohalohalo4") { // Nice try :)
       setIsAdmin(true);
     } else {
       alert('Access denied.');
