@@ -110,11 +110,11 @@ function App() {
         <table className="admin-table">
           <thead>
             <tr>
-              <th>Group 1</th>
-              <th>Group 2</th>
-              <th>Group 3</th>
-              <th>Group 4</th>
-              <th>Group 5</th>
+              <th>Dwende</th>
+              <th>Aswang</th>
+              <th>Maria</th>
+              <th>Idiyanale</th>
+              <th>Lakapati</th>
             </tr>
           </thead>
           <tbody>
